@@ -51,13 +51,15 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
             text-align: center;
-            font-size: 22px;
+            font-size: clamp(16px, 4vw, 22px);
             opacity: 0;
             transition: 1.2s ease;
             z-index: 10;
             text-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
             line-height: 1.6;
-            max-width: 85%;
+            max-width: 90%;
+            width: 90%;
+            padding: 20px;
             display: none;
         }
 
@@ -172,7 +174,7 @@
         }
 
         .big-love {
-            font-size: 42px;
+            font-size: clamp(28px, 8vw, 42px);
             color: #ff0000;
             text-shadow: 0 0 20px #ff0000, 0 0 50px #ff0000, 0 0 100px #cc0000;
             font-weight: bold;
@@ -210,6 +212,31 @@
             100% {
                 transform: scale(0) translateY(-60px);
                 opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .text {
+                font-size: 12px;
+            }
+
+            .main-button {
+                bottom: 25px;
+                padding: 12px 24px;
+                font-size: 15px;
+            }
+
+            .next-btn {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+
+            .sender {
+                font-size: 12px;
+            }
+
+            .heart-emoji {
+                font-size: 30px;
             }
         }
     </style>
@@ -295,7 +322,8 @@
         window.addEventListener('resize', resize);
 
         const stars = [];
-        for (let i = 0; i < 250; i++) {
+        const starCount = window.innerWidth < 600 ? 120 : 250;
+        for (let i = 0; i < starCount; i++) {
             stars.push({
                 x: Math.random() * 2000,
                 y: Math.random() * 2000,
@@ -394,7 +422,8 @@
         }
 
         const words = [];
-        const total = 90;
+        const isMobile = window.innerWidth < 600;
+        const total = isMobile ? 50 : 90;
         for (let i = 0; i < total; i++) {
             let span = document.createElement("span");
             span.className = "text";
@@ -405,13 +434,14 @@
 
         function animateHeart() {
             let neonPulse = 0.8 + 0.2 * Math.sin(frame * 0.04);
+            let scale = Math.min(W, H) < 500 ? 8 : 14;
             words.forEach(w => {
                 w.t += 0.003;
                 let t = w.t;
                 let x = 16 * Math.pow(Math.sin(t), 3);
                 let y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-                w.el.style.left = (x * 14 + W / 2) + "px";
-                w.el.style.top = (-y * 14 + H / 2) + "px";
+                w.el.style.left = (x * scale + W / 2) + "px";
+                w.el.style.top = (-y * scale + H / 2) + "px";
                 w.el.style.opacity = neonPulse;
             });
         }
