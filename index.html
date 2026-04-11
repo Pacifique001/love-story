@@ -45,35 +45,63 @@
             pointer-events: none;
         }
 
-        .message {
+        .msg-box {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
             text-align: center;
-            font-size: 24px;
+            font-size: 22px;
             opacity: 0;
-            transition: 1.5s ease;
+            transition: 1.2s ease;
             z-index: 10;
             text-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
+            line-height: 1.6;
+            max-width: 85%;
+            display: none;
         }
 
-        .message.show {
+        .msg-box.active {
+            display: block;
+        }
+
+        .msg-box.show {
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
 
-        .button {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 14px 30px;
+        .msg-box.hide {
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+        }
+
+        .next-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 28px;
             background: linear-gradient(135deg, #ff4d6d, #ff1040);
             border: none;
             border-radius: 30px;
             color: white;
-            font-size: 17px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ff4d6d;
+            animation: softPulse 2s infinite;
+            letter-spacing: 0.5px;
+        }
+
+        .main-button {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 35px;
+            background: linear-gradient(135deg, #ff4d6d, #ff1040);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 0 20px #ff4d6d, 0 0 40px rgba(255, 16, 64, 0.4);
@@ -92,29 +120,170 @@
                 box-shadow: 0 0 30px #ff4d6d, 0 0 60px rgba(255, 16, 64, 0.6);
             }
         }
+
+        @keyframes softPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 25px #ff4d6d;
+            }
+        }
+
+        .sender {
+            font-size: 14px;
+            color: #ff8fa3;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .heart-emoji {
+            font-size: 40px;
+            display: inline-block;
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.25);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.15);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        .big-love {
+            font-size: 42px;
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000, 0 0 50px #ff0000, 0 0 100px #cc0000;
+            font-weight: bold;
+        }
+
+        .fade-letter {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ff4d6d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 20;
+            animation: sparkleAnim 1s forwards;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0) translateY(-60px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
     <canvas id="bg"></canvas>
 
-    <div class="message" id="msg">
-        💖 I have something to tell you... <br><br>
-        You are the reason I smile every day ❤️ <br><br>
-        <b style="font-size:36px;color:#9d0909;text-shadow:0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #cc0000;">I LOVE
-            YOU</b>
+    <!-- Message 1 -->
+    <div class="msg-box" id="msg1">
+        <div class="sender">— From Pacifique —</div>
+        <span class="heart-emoji">💖</span><br><br>
+        Hey beautiful...<br>
+        I've been keeping something in my heart<br>
+        that I can't hold any longer...<br><br>
+        <button class="next-btn" onclick="showMsg(2)">Are you ready to hear it? 💫</button>
     </div>
 
-    <button class="button" onclick="reveal()">Tap here ❤️</button>
+    <!-- Message 2 -->
+    <div class="msg-box" id="msg2">
+        <div class="sender">— Pacifique whispers —</div>
+        <span class="heart-emoji">🌹</span><br><br>
+        Every time I see you,<br>
+        my heart skips a beat...<br>
+        You make the world stop spinning<br>
+        and start making sense.<br><br>
+        <button class="next-btn" onclick="showMsg(3)">Want to know what else? 🦋</button>
+    </div>
+
+    <!-- Message 3 -->
+    <div class="msg-box" id="msg3">
+        <div class="sender">— Pacifique confesses —</div>
+        <span class="heart-emoji">✨</span><br><br>
+        I dream about your smile at night,<br>
+        and wake up wishing you were near.<br>
+        You're the first thought in my morning<br>
+        and the last prayer in my heart.<br><br>
+        <button class="next-btn" onclick="showMsg(4)">There's more... tap gently 🌙</button>
+    </div>
+
+    <!-- Message 4 -->
+    <div class="msg-box" id="msg4">
+        <div class="sender">— Pacifique promises —</div>
+        <span class="heart-emoji">💎</span><br><br>
+        If I could hold your hand forever,<br>
+        I would never let go.<br>
+        You are not just someone I love —<br>
+        you are my entire heartbeat.<br><br>
+        <button class="next-btn" onclick="showMsg(5)">One last thing... close your eyes and tap 💕</button>
+    </div>
+
+    <!-- Message 5 (Final) -->
+    <div class="msg-box" id="msg5">
+        <div class="sender">— Pacifique, with all his heart —</div>
+        <br>
+        <span class="heart-emoji">💖</span><br><br>
+        You are the reason I believe in love.<br>
+        You are my today, my tomorrow, my forever.<br><br>
+        <span class="big-love" id="finalLove"></span><br><br>
+        <span style="font-size:16px;color:#ff8fa3;">
+            — forever yours, Pacifique 🌹
+        </span>
+    </div>
+
+    <!-- Start Button -->
+    <button class="main-button" id="startBtn" onclick="startReveal()">
+        I have something for you... tap here ❤️
+    </button>
 
     <audio id="music" loop>
-        <!-- Download from: https://www.bensound.com/royalty-free-music/track/angels-by-my-side-touching-folk -->
-        <!-- Save as angels.mp3 in the same folder as this HTML file -->
         <source src="bensound-angelsbymyside.mp3" type="audio/mp3">
     </audio>
 
     <script>
-        // === BACKGROUND CANVAS: stars, shooting stars, nebula, galaxy swirl ===
         const canvas = document.getElementById('bg');
         const ctx = canvas.getContext('2d');
         let W, H;
@@ -125,7 +294,6 @@
         resize();
         window.addEventListener('resize', resize);
 
-        // Stars
         const stars = [];
         for (let i = 0; i < 250; i++) {
             stars.push({
@@ -137,7 +305,6 @@
             });
         }
 
-        // Shooting stars
         const shooters = [];
         function maybeShoot() {
             if (Math.random() < 0.012) {
@@ -146,8 +313,7 @@
                     y: Math.random() * H * 0.3,
                     vx: 4 + Math.random() * 4,
                     vy: 2 + Math.random() * 2,
-                    life: 1,
-                    len: 60 + Math.random() * 40
+                    life: 1
                 });
             }
         }
@@ -156,8 +322,6 @@
 
         function drawBackground() {
             frame++;
-
-            // Sky gradient
             let g = ctx.createRadialGradient(W * 0.5, H * 0.8, 0, W * 0.5, H * 0.5, W);
             g.addColorStop(0, '#0b1a3a');
             g.addColorStop(0.4, '#060d24');
@@ -165,7 +329,6 @@
             ctx.fillStyle = g;
             ctx.fillRect(0, 0, W, H);
 
-            // Nebula clouds
             let nebulas = [
                 { x: W * 0.3, y: H * 0.35, r: 200, c1: 'rgba(120,30,80,0.06)', c2: 'rgba(120,30,80,0)' },
                 { x: W * 0.7, y: H * 0.25, r: 180, c1: 'rgba(30,50,120,0.07)', c2: 'rgba(30,50,120,0)' },
@@ -180,7 +343,6 @@
                 ctx.fillRect(0, 0, W, H);
             });
 
-            // Galaxy swirl (subtle rotating dots)
             ctx.save();
             ctx.translate(W * 0.5, H * 0.45);
             ctx.rotate(frame * 0.0003);
@@ -198,7 +360,6 @@
             }
             ctx.restore();
 
-            // Stars
             stars.forEach(s => {
                 let sx = s.x % W;
                 let sy = s.y % H;
@@ -209,7 +370,6 @@
                 ctx.fill();
             });
 
-            // Shooting stars
             maybeShoot();
             for (let i = shooters.length - 1; i >= 0; i--) {
                 let ss = shooters[i];
@@ -217,18 +377,15 @@
                 ss.y += ss.vy;
                 ss.life -= 0.015;
                 if (ss.life <= 0) { shooters.splice(i, 1); continue; }
-
                 let grad = ctx.createLinearGradient(ss.x, ss.y, ss.x - ss.vx * 12, ss.y - ss.vy * 12);
                 grad.addColorStop(0, `rgba(255,255,255,${ss.life})`);
-                grad.addColorStop(1, `rgba(255,255,255,0)`);
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
                 ctx.beginPath();
                 ctx.moveTo(ss.x, ss.y);
                 ctx.lineTo(ss.x - ss.vx * 12, ss.y - ss.vy * 12);
                 ctx.strokeStyle = grad;
                 ctx.lineWidth = 2;
                 ctx.stroke();
-
-                // Glow head
                 ctx.beginPath();
                 ctx.arc(ss.x, ss.y, 2, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255,255,255,${ss.life})`;
@@ -236,7 +393,6 @@
             }
         }
 
-        // === HEART TEXT (flowing "I love you") ===
         const words = [];
         const total = 90;
         for (let i = 0; i < total; i++) {
@@ -249,7 +405,7 @@
 
         function animateHeart() {
             let neonPulse = 0.8 + 0.2 * Math.sin(frame * 0.04);
-            words.forEach((w, idx) => {
+            words.forEach(w => {
                 w.t += 0.003;
                 let t = w.t;
                 let x = 16 * Math.pow(Math.sin(t), 3);
@@ -260,7 +416,6 @@
             });
         }
 
-        // === MAIN LOOP ===
         function loop() {
             drawBackground();
             animateHeart();
@@ -268,11 +423,72 @@
         }
         loop();
 
-        // === REVEAL ===
-        function reveal() {
-            document.getElementById("msg").classList.add("show");
-            document.querySelector(".button").style.display = "none";
+        // === MESSAGE SYSTEM ===
+        let currentMsg = 0;
+
+        function startReveal() {
+            document.getElementById('startBtn').style.display = 'none';
             try { document.getElementById("music").play(); } catch (e) { }
+            showMsg(1);
+        }
+
+        function spawnSparkles() {
+            for (let i = 0; i < 20; i++) {
+                let s = document.createElement('div');
+                s.className = 'sparkle';
+                s.style.left = (W / 2 + (Math.random() - 0.5) * 300) + 'px';
+                s.style.top = (H / 2 + (Math.random() - 0.5) * 200) + 'px';
+                s.style.background = ['#ff4d6d', '#ff1040', '#ff8fa3', '#fff'][Math.floor(Math.random() * 4)];
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 1000);
+            }
+        }
+
+        function showMsg(n) {
+            spawnSparkles();
+
+            // Hide current
+            if (currentMsg > 0) {
+                let prev = document.getElementById('msg' + currentMsg);
+                prev.classList.remove('show');
+                prev.classList.add('hide');
+                setTimeout(() => {
+                    prev.classList.remove('active', 'hide');
+                }, 800);
+            }
+
+            currentMsg = n;
+            let el = document.getElementById('msg' + n);
+
+            setTimeout(() => {
+                el.classList.add('active');
+                setTimeout(() => {
+                    el.classList.add('show');
+                    // Final message: type out I LOVE YOU
+                    if (n === 5) {
+                        typeOutLove();
+                    }
+                }, 100);
+            }, currentMsg === 1 ? 100 : 800);
+        }
+
+        function typeOutLove() {
+            const target = document.getElementById('finalLove');
+            const text = 'I   L O V E   Y O U';
+            target.innerHTML = '';
+            for (let i = 0; i < text.length; i++) {
+                let span = document.createElement('span');
+                span.className = 'fade-letter';
+                span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+                span.style.animationDelay = (0.8 + i * 0.12) + 's';
+                target.appendChild(span);
+            }
+            // Extra sparkle burst at end
+            setTimeout(() => {
+                for (let k = 0; k < 3; k++) {
+                    setTimeout(spawnSparkles, k * 400);
+                }
+            }, 3500);
         }
     </script>
 </body>
